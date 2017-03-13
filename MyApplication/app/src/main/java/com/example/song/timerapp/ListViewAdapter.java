@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class ListViewAdapter extends BaseAdapter {
 
     private ArrayList<ListViewItem> listviewitemlist = new ArrayList<ListViewItem>();
+
 
     public ListViewAdapter(ArrayList<ListViewItem> list) {
         this.listviewitemlist = list;
@@ -49,17 +51,19 @@ public class ListViewAdapter extends BaseAdapter {
 
         TextView TitleView = (TextView) convertView.findViewById(R.id.textView1);
         TextView DescView = (TextView) convertView.findViewById(R.id.textView2);
+        Switch sw = (Switch) convertView.findViewById(R.id.switchbt1);
 
         ListViewItem listviewitem = listviewitemlist.get(pos);
 
         TitleView.setText(listviewitem.getTitle());
         DescView.setText(listviewitem.getDesc());
+        sw.setChecked(listviewitem.getSw());
 
         return convertView;
     }
 
-    public void addItem(String t, String d){
-        ListViewItem item = new ListViewItem(t, d);
+    public void addItem(String t, String d, boolean sw){
+        ListViewItem item = new ListViewItem(t, d, sw);
 
         listviewitemlist.add(item);
     }
@@ -81,6 +85,8 @@ public class ListViewAdapter extends BaseAdapter {
         ListViewItem item = listviewitemlist.get(position);
         item.setSw(!item.getSw());
     }
+
+
 
 
 }

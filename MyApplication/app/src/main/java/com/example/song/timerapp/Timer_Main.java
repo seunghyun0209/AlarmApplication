@@ -1,16 +1,14 @@
 package com.example.song.timerapp;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Switch;
-
 import java.util.ArrayList;
 
 public class Timer_Main extends AppCompatActivity {
@@ -23,15 +21,10 @@ public class Timer_Main extends AppCompatActivity {
 
     static final int REQ_ADD_CONTACT = 1 ;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer__main);
-
-
-
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
@@ -43,28 +36,20 @@ public class Timer_Main extends AppCompatActivity {
         DeleBt.setOnClickListener(listener);
        // Sw = (Switch) findViewById(R.id.switchbt1);
 
-
-
-
     }
-
 
     private final View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.Editbt){
-                int count = adapter.getCount();
+                int count = adapter.getCount(); //adapter에 있는 개수를 저장
 
-                Intent intent = new Intent(Timer_Main.this, SelectTimerActivity.class);
-                startActivityForResult(intent, REQ_ADD_CONTACT);
-               // adapter.addItem(count+"번째 알람", "추가");
-                //adapter.notifyDataSetChanged();
-
+                Intent intent = new Intent(Timer_Main.this, SelectTimerActivity.class); //시간을 설정하는 액티비티로 이동
+                startActivityForResult(intent, REQ_ADD_CONTACT); //시간설정이 완료됨과 동시에 선택된 결과값을 가져옴
             }
             else if(v.getId() == R.id.Delebt){
                 SparseBooleanArray checkitem = listview.getCheckedItemPositions();
                 int count = adapter.getCount();
-
 
                 Log.d("test","ErrorCheck");
 
@@ -73,9 +58,8 @@ public class Timer_Main extends AppCompatActivity {
                         Log.d("test", "count : "+count+" checkitem"+checkitem.get(i));
 
                         if (checkitem.get(i)) {
-                            Log.d("test", "크기"+checkitem.size()+"값"+checkitem.get(i));
+                            Log.d("test", "크기"+checkitem.size()+"값"+checkitem.get(i)+" sdf" +checkitem.toString());
                             adapter.deletItem(i);
-
                         }
                     }
                 }
@@ -89,20 +73,18 @@ public class Timer_Main extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQ_ADD_CONTACT) {
             if(resultCode == RESULT_OK) {
-                int AddTime = 0;
-                int AddMin = 0;
+                int AddTime = 0, AddMin = 0;
+                String memo;
                 AddTime = intent.getIntExtra("Time", 0);
                 AddMin = intent.getIntExtra("Min", 0);
-                TimeSave(AddTime,AddMin);
-
-
+                memo = intent.getStringExtra("Memo");
+                TimeSave(AddTime,AddMin, memo);
             }
         }
     }
 
-    public void TimeSave(int time, int min){
-        String Text;
-        String memo;
+    public void TimeSave(int time, int min, String m){
+        String Text, memo;
         int atime, amin;
 
         if(time>12){
@@ -115,11 +97,10 @@ public class Timer_Main extends AppCompatActivity {
             amin = min;
             Text = "오전  "+atime+" : "+amin;
         }
-        memo = "데이터메모";
-        adapter.addItem(Text,memo);
+        memo = m;
+        adapter.addItem(Text,memo, true);
         adapter.notifyDataSetChanged();
+
     }
-
-
 
 }

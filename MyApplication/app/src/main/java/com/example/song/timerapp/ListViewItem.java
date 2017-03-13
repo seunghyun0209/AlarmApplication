@@ -12,9 +12,10 @@ public class ListViewItem {
     private String Desc;
     private boolean swit;
 
-    public ListViewItem(String title, String desc){
+    public ListViewItem(String title, String desc, boolean sw){
         this.Title = title;
         this.Desc = desc;
+        this.swit = sw;
     }
 
     public void setTitle(String title){

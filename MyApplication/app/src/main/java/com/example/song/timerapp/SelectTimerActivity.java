@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -20,10 +21,10 @@ public class SelectTimerActivity extends AppCompatActivity{
 
     TimePicker tp;
     Button Savebt;
-    TextView test;
+    EditText MemoText;
     CheckBox Mon,Tue, Wed,Thu, Fri, Sat, Sun;
-    private int Time;
-    private int min;
+    private int Time, min;
+    private String memotext;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -33,7 +34,7 @@ public class SelectTimerActivity extends AppCompatActivity{
         final Intent intent = new Intent();
         tp = (TimePicker) findViewById(R.id.timePicker);
         Savebt = (Button) findViewById(R.id.Savebt);
-        test = (TextView) findViewById(R.id.test);
+        MemoText = (EditText) findViewById(R.id.memoedit);
         Mon = (CheckBox) findViewById(R.id.CheckMon);
         Tue = (CheckBox) findViewById(R.id.CheckTue);
         Wed = (CheckBox) findViewById(R.id.CheckWed);
@@ -47,15 +48,17 @@ public class SelectTimerActivity extends AppCompatActivity{
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 Time = hourOfDay;
                 min = minute;
-                test.setText("바뀐 시간 값 : "+Time+" 바뀐 분 값 : "+min);
+                //test.setText("바뀐 시간 값 : "+Time+" 바뀐 분 값 : "+min);
             }
         });
 
         Savebt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                memotext = MemoText.getText().toString();
                 intent.putExtra("Time", Time);
                 intent.putExtra("Min", min);
+                intent.putExtra("Memo", memotext);
                 setResult(RESULT_OK,intent);
                 finish();
             }
@@ -66,7 +69,6 @@ public class SelectTimerActivity extends AppCompatActivity{
         @Override
         public void onClick(View v) {
             if(v.getId() == R.id.CheckMon){
-
             }
         }
     };
