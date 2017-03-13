@@ -1,10 +1,14 @@
 package com.example.song.timerapp;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -16,9 +20,12 @@ public class SelectTimerActivity extends AppCompatActivity{
 
     TimePicker tp;
     Button Savebt;
-    int Time;
-    int min;
+    TextView test;
+    CheckBox Mon,Tue, Wed,Thu, Fri, Sat, Sun;
+    private int Time;
+    private int min;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +33,21 @@ public class SelectTimerActivity extends AppCompatActivity{
         final Intent intent = new Intent();
         tp = (TimePicker) findViewById(R.id.timePicker);
         Savebt = (Button) findViewById(R.id.Savebt);
+        test = (TextView) findViewById(R.id.test);
+        Mon = (CheckBox) findViewById(R.id.CheckMon);
+        Tue = (CheckBox) findViewById(R.id.CheckTue);
+        Wed = (CheckBox) findViewById(R.id.CheckWed);
+        Thu = (CheckBox) findViewById(R.id.CheckThur);
+        Fri = (CheckBox) findViewById(R.id.CheckFri);
+        Sat = (CheckBox) findViewById(R.id.CheckSat);
+        Sun = (CheckBox) findViewById(R.id.CheckSun);
 
         tp.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
                 Time = hourOfDay;
                 min = minute;
-                Toast.makeText(SelectTimerActivity.this, ""+hourOfDay+ " : " +minute, Toast.LENGTH_SHORT).show();
+                test.setText("바뀐 시간 값 : "+Time+" 바뀐 분 값 : "+min);
             }
         });
 
@@ -45,8 +60,14 @@ public class SelectTimerActivity extends AppCompatActivity{
                 finish();
             }
         });
-
-
-
     }
+
+    private final View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.CheckMon){
+
+            }
+        }
+    };
 }

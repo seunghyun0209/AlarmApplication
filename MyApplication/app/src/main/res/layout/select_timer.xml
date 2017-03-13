@@ -6,6 +6,7 @@
     <TimePicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
         android:id="@+id/timePicker" />
 
 
@@ -135,5 +136,19 @@
             android:layout_weight="1"
             android:id="@+id/Cancelbt" />
     </LinearLayout>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/test" />
+
+
+    <EditText
+        android:text="내용을 입력해주세요."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/memoedit" />
 
 </LinearLayout>

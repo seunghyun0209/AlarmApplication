@@ -21,7 +21,6 @@ public class Timer_Main extends AppCompatActivity {
     Button EditBt;
     Button DeleBt;
 
-
     static final int REQ_ADD_CONTACT = 1 ;
 
 
@@ -94,11 +93,33 @@ public class Timer_Main extends AppCompatActivity {
                 int AddMin = 0;
                 AddTime = intent.getIntExtra("Time", 0);
                 AddMin = intent.getIntExtra("Min", 0);
-                adapter.addItem(""+AddTime,""+AddMin);
-                adapter.notifyDataSetChanged();
+                TimeSave(AddTime,AddMin);
+
 
             }
         }
     }
+
+    public void TimeSave(int time, int min){
+        String Text;
+        String memo;
+        int atime, amin;
+
+        if(time>12){
+            atime = time - 12;
+            amin = min;
+            Text = "오후  "+atime+" : "+amin;
+        }
+        else{
+            atime = time;
+            amin = min;
+            Text = "오전  "+atime+" : "+amin;
+        }
+        memo = "데이터메모";
+        adapter.addItem(Text,memo);
+        adapter.notifyDataSetChanged();
+    }
+
+
 
 }
