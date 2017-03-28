@@ -10,11 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Timer_Main extends AppCompatActivity {
 
     final ArrayList<ListViewItem> item = new ArrayList<>();
-    final DBCreate dbHelper = new DBCreate(getApplicationContext());
+    static DBCreate dbHelper;
     final ListViewAdapter adapter = new ListViewAdapter(item);
     static final int REQ_ADD_CONTACT = 1 ;
     ListView listview;
@@ -28,6 +29,7 @@ public class Timer_Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer__main);
 
+        DBList();
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
@@ -108,6 +110,24 @@ public class Timer_Main extends AppCompatActivity {
         adapter.addItem(Text,memo, true);
         adapter.notifyDataSetChanged();
 
+    }
+
+    public void DBList(){
+        Log.d("Test", "Coming DBList Method");
+        if(dbHelper == null) {
+            Log.d("Test", "initalize of DataBase");
+            dbHelper = new DBCreate(getApplicationContext());
+        }
+        else{
+            Log.d("Test", "not initalize of DataBase");
+            List DBdata = dbHelper.getCursor();
+            Log.d("Test", "Reading Data of All");
+            for (int i = 0; i < DBdata.size(); i++) {
+                //Log.d("Test", "Read Data "+i);
+                Alarm alarm = (Alarm) DBdata.get(i);
+                TimeSave(alarm.getTime(), alarm.getMin(), alarm.getMemo());
+            }
+        }
     }
 
 }

@@ -5,20 +5,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Song on 2017-03-27.
  */
 public class DBCreate extends SQLiteOpenHelper {
 
+    private Context context;
+
     public DBCreate(Context context){
         super(context, "Alarm", null, 1);
+        this.context = context;
 
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE AlARM(" +
-                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Id int," +
                 "Time int default 0, "+
                 "Min int default 0, "+
                 "Memo text)";
@@ -75,6 +81,26 @@ public class DBCreate extends SQLiteOpenHelper {
         }
 
         return result;
+    }
+
+    public List getCursor(){
+        SQLiteDatabase db = getReadableDatabase();
+        List alarmData = new ArrayList();
+        Cursor cursor = db.rawQuery("SELECT * FROM AlARM", null);
+        Alarm alarm = null;
+
+        while(cursor.moveToNext()){
+            alarm = new Alarm();
+            alarm.set_Id(cursor.getInt(0));
+            alarm.setTime(cursor.getInt(1));
+            alarm.setMin(cursor.getInt(2));
+            alarm.setMemo(cursor.getString(3));
+
+            alarmData.add(alarm);
+        }
+
+
+        return alarmData;
     }
 
 
