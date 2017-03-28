@@ -17,7 +17,6 @@ public class AlarmHATT extends AppCompatActivity{
     private int atime;
     private int amin;
     private String memo;
-    AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
     Intent intent;
     PendingIntent sender;
 
@@ -47,10 +46,11 @@ public class AlarmHATT extends AppCompatActivity{
         Log.d("Test", "TimerTest");
 
         //알람 예약
+        AlarmManager am = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
     }
 
     public void AlarmClose(){
-        am.cancel(sender);
+        //am.cancel(sender);
     }
 }

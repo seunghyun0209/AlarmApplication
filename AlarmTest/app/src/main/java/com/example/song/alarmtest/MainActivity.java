@@ -22,16 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), Boardcast.class);
-
-        intent.putExtra("test","test");
-
-        final PendingIntent sender = PendingIntent.getBroadcast(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
 
         final Calendar calendar = Calendar.getInstance();
-
 
         startbt = (Button) findViewById(R.id.button1);
 
@@ -39,25 +31,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("Test", "AlarmStart1");
-                calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), calendar.get(Calendar.HOUR), 13, 0);
-                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+                //calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), calendar.get(Calendar.HOUR), 13, 0);
+
                 Log.d("Test", "Time"+ calendar.get(Calendar.HOUR));
                 Log.d("Test", "am Start");
+
+                Intent intent = new Intent(getApplicationContext(), MyService.class);
+                intent.putExtra("test","test");
+                intent.putExtra("Time", 18);
+
+                startService(intent);
             }
         });
-
 
         stopbt = (Button) findViewById(R.id.button2);
 
         stopbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyService.class);
+                stopService(intent);
 
-                am.cancel(sender);
-                Log.d("Test", "AlarmStop"+am.toString());
             }
         });
-
 
     }
 }

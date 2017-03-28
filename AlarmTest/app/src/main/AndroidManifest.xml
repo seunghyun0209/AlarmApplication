@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.song.alarmtest">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +19,12 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Boardcast"></receiver>
+        <receiver android:name=".Boardcast" />
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

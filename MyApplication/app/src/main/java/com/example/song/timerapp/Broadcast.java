@@ -38,6 +38,4 @@ public class Broadcast extends BroadcastReceiver {
         notificationmanager.notify(1, builder.build());
 
     }
-
-
 }

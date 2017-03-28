@@ -14,17 +14,20 @@ import java.util.ArrayList;
 public class Timer_Main extends AppCompatActivity {
 
     final ArrayList<ListViewItem> item = new ArrayList<>();
-    ListView listview;
+    final DBCreate dbHelper = new DBCreate(getApplicationContext());
     final ListViewAdapter adapter = new ListViewAdapter(item);
+    static final int REQ_ADD_CONTACT = 1 ;
+    ListView listview;
     Button EditBt;
     Button DeleBt;
 
-    static final int REQ_ADD_CONTACT = 1 ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer__main);
+
 
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
@@ -79,6 +82,10 @@ public class Timer_Main extends AppCompatActivity {
                 AddMin = intent.getIntExtra("Min", 0);
                 memo = intent.getStringExtra("Memo");
                 TimeSave(AddTime,AddMin, memo);
+                dbHelper.insert(AddTime, AddMin, memo);
+                AlarmHATT alarm = new AlarmHATT(getApplicationContext(), AddTime, AddMin, memo);
+                alarm.Alarm();
+
             }
         }
     }
